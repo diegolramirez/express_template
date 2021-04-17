@@ -11,10 +11,12 @@ class Server {
     const express = require("express");
     const bodyParser = require("body-parser");
     const helmet = require("helmet");
+    const morgan = require("morgan");
 
     // express y middlewares init
     this.app = express();
     this.app.use(helmet());
+    this.app.use(morgan("combined"));
 
     // config bodyParser
     this.app.use(
@@ -30,10 +32,26 @@ class Server {
       })
     );
 
-    // //documentacion
-    // this.app.use("/", express.static("doc"));
-    // //Se incorpora carpeta para las imagenes
-    // this.app.use("/", express.static("files"));
+    // documentacion
+    const swaggerJsDoc = require("swagger-jsdoc");
+    const swaggerUi = require("swagger-ui-express");
+    const swaggerOptions = {
+      swaggerDefinition: {
+        info: {
+          version: "1.0.0",
+          title: "Express Template",
+          description: "Express template for server repos",
+          contact: {
+            name: "Diegol Ramírez-Milano"
+          },
+          servers: ["http://localhost:3000"]
+        }
+      },
+      apis: ["services/*/api.js"]
+    };
+
+    const swaggerDocs = swaggerJsDoc(swaggerOptions);
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
     // APIs init
     let dirServices = "./services";
@@ -44,7 +62,7 @@ class Server {
       let pathApi = `${pathTabla}/api.js`;
       if (fs.lstatSync(pathTabla).isDirectory() && fs.existsSync(pathApi)) {
         let api = require(pathApi);
-        api(this.app, `/meli_scrapper/${path}`);
+        api(this.app, `/express_template/${path}`);
       }
     }
 
@@ -59,7 +77,6 @@ class Server {
 
   close() {
     this.app.close();
-    this.appPublico.close();
   }
 }
 

@@ -1,0 +1,45 @@
+{
+  "name": "express_template",
+  "version": "1.0.0",
+  "description": "Express template for server repos",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "helmet": "^4.1.0",
+    "http-status": "^1.4.2",
+    "moment-timezone": "^0.5.31",
+    "morgan": "^1.10.0",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "test": "nodemon index.js",
+    "start": "export set NODE_ENV=prod && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegolramirez/express_template.git"
+  },
+  "keywords": [
+    "express",
+    "template"
+  ],
+  "author": "diegol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegolramirez/express_template/issues"
+  },
+  "homepage": "https://github.com/diegolramirez/express_template#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "*.json"
+    ],
+    "delay": "500"
+  }
+}
